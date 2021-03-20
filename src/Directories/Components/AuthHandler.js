@@ -7,6 +7,7 @@ export function useAuth() { return useContext(AuthContext) };
 
 export function AuthProvider({content}) {
     const [user, setUser] = useState();
+    const [isLoading, setLoading] = useState(true);
 
     function signUp(email, password) {
         return Auth.createUserWithEmailAndPassword(email, password);
@@ -17,7 +18,10 @@ export function AuthProvider({content}) {
     }
 
     useEffect(() => {
-        const disconnect = Auth.onAuthStateChanged(newUser => {setUser(newUser)});
+        const disconnect = Auth.onAuthStateChanged(newUser => {
+            setUser(newUser);
+            setLoading(false);
+        });
         return disconnect;
     }, [])
     
@@ -27,6 +31,6 @@ export function AuthProvider({content}) {
 
     return (
     <AuthContext.Provider value={value}>
-        {content}
+        {!isLoading && content}
     </AuthContext.Provider>);
 }

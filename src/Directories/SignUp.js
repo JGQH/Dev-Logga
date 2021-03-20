@@ -5,7 +5,8 @@ const SignUp = () => {
     const redirect = (<>Already have an account? <Link to="/signin">Sign In!</Link></>);
     return <Signer
             buttonText="Sign Up"
-            redirectText={redirect} />;
+            redirectText={redirect}
+            isSignUp={true} />;
 }
 
 export default SignUp;
