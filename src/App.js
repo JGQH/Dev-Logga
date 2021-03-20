@@ -1,7 +1,6 @@
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from './Directories/Home';
-import SignIn from './Directories/SignIn';
-import SignUp from './Directories/SignUp';
+import Signer from './Directories/Signer'
 import { AuthProvider } from './Directories/Components/AuthHandler';
 
 const RealApp = () => {
@@ -12,10 +11,10 @@ const RealApp = () => {
         <Home />
       </Route>
       <Route path="/signin">
-        <SignIn />
+        <Signer isSignUp={false} />
       </Route>
       <Route path="/signup">
-        <SignUp />
+        <Signer isSignUp={true} />
       </Route>
     </Switch>
   </Router>);

@@ -1,13 +1,26 @@
-import logo from '../../Resources/dev-loggar-logo.png';
+import logo from '../Resources/dev-loggar-logo.png';
 import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from './AuthHandler'
+import { Link, useHistory } from 'react-router-dom';
+import { useAuth } from './Components/AuthHandler'
 
-const Signer = ({buttonText, redirectText, isSignUp}) => {
+const Signer = ({isSignUp}) => {
     const { signIn, signUp } = useAuth();
     const [emailRef, passwordRef, confirmationRef] = [useRef(), useRef(), useRef()];
     const [isLoading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
+    const history = useHistory();
+
+    async function attemptSubmit(email, password, error){
+        try {
+            setErrorMsg(null);
+            setLoading(true);
+            await (isSignUp ? signUp : signIn)(email, password, error);
+            history.push("/")
+        } catch {
+            setLoading(false);
+            setErrorMsg(error);
+        }
+    }
 
     async function handleSubmit(evt) {
         evt.preventDefault();
@@ -19,27 +32,13 @@ const Signer = ({buttonText, redirectText, isSignUp}) => {
             const confirmation = confirmationRef.current.value;
 
             if(password === confirmation) {
-                try {
-                    setErrorMsg(null);
-                    setLoading(true);
-                    await signUp(email, password);
-                    setLoading(false);
-                } catch {
-                    setErrorMsg("Failed to create account");
-                }
+                await attemptSubmit(email, password, "Failed to create account");
                 return;
             } else {
                 setErrorMsg("Passwords do not match")
             }
         }else {
-            try {
-                setErrorMsg(null);
-                setLoading(true);
-                await signIn(email, password);
-                setLoading(false);
-            } catch {
-                setErrorMsg("Failed to login");
-            }
+            await attemptSubmit(email, password, "Failed to login");
         }
     }
 
@@ -60,9 +59,12 @@ const Signer = ({buttonText, redirectText, isSignUp}) => {
                 <input ref={confirmationRef} type="password" placeholder="$12345" required></input>
             </fieldset>}
             {errorMsg && <>{errorMsg}</>}
-            <button type="submit" disabled={isLoading}>{buttonText}</button>
+            <button type="submit" disabled={isLoading}>{isSignUp ? "Sign Up" : "Sign In"}</button>
             <div className="redirecter">
-                {redirectText}
+                {isSignUp ?
+                <>Already have an account? <Link to="/signin">Sign In!</Link></>
+                :
+                <>Don't have an account yet? <Link to="/signup">Sign Up!</Link></>}
             </div>
         </form>
     </div>);
