@@ -7,6 +7,27 @@ $colors:#0d2b45 #203c56 #544e68 #8d697a #d08159 #ffaa5e #ffd4a3 #ffecd6;
     @return list.nth($colors, $index);
 }
 
+@function linearGradient($deg, $indexes) {
+    $content: $deg;
+    
+    $counter: 0;
+    $length: list.length($indexes) - 1;
+    @each $index in $indexes {
+        $percent: ($counter / $length) * 100%;
+        $content: $content, getColor($index) $percent;
+        $counter: $counter + 1
+    }
+    @return linear-gradient($content);
+}
+
+@mixin flex-box{
+    -webkit-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+}
+
 @mixin small {
     @media only screen and (min-width: 600px){
         @content;

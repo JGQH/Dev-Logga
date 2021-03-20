@@ -1,0 +1,57 @@
+@use "./utilities" as *;
+
+.signer {
+    width: 100vw;
+    height: 100vh;
+    background: linearGradient(180deg, 1 2 3 4);
+
+    @include flex-box;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 200px;
+        height: auto;
+    }
+
+    $separation: 10px;
+    .form {
+        padding: $separation;
+        margin: $separation;
+        border-radius: 10px;
+        background-color: getColor(8);
+        width: min(300px, 90%);
+
+        fieldset {
+            border-radius: 10px;
+            border-color: getColor(1);
+            color: getColor(1);
+
+            input {
+                width: 100%;
+                padding: 5px;
+            }
+        }
+        
+        fieldset:not(:last-of-type) {
+            margin-bottom: $separation;
+        }
+
+        button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px;
+
+            color: getColor(6);
+            background-color: getColor(2);
+            border: 2px solid getColor(1);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .redirecter {
+            text-align: center;
+        }
+    }
+}

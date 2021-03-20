@@ -1,7 +1,11 @@
+import Signer from './Components/Signer';
+import { Link } from 'react-router-dom';
+
 const SignUp = () => {
-    return (
-        <p>SignUp</p>
-    );
+    const redirect = (<>Already have an account? <Link to="/signin">Sign In!</Link></>);
+    return <Signer
+            buttonText="Sign Up"
+            redirectText={redirect} />;
 }
 
 export default SignUp;
