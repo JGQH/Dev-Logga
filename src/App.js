@@ -2,8 +2,9 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from './Directories/Home';
 import SignIn from './Directories/SignIn';
 import SignUp from './Directories/SignUp';
+import { AuthProvider } from './Directories/Components/AuthHandler';
 
-function App() {
+const RealApp = () => {
   return (
   <Router>
     <Switch>
@@ -19,5 +20,7 @@ function App() {
     </Switch>
   </Router>);
 }
+
+const App = () => <AuthProvider content={<RealApp />} />;
 
 export default App;
