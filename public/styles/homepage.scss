@@ -1,0 +1,50 @@
+@use "./utilities" as *;
+
+.homepage {
+    .header {
+        text-align: center;
+        color: getColor(6);
+        padding: 30px;
+        width: 100vw;
+        height: 33vh;
+        background-size: cover;
+
+        img {
+            width: 125px;
+            height: auto;
+        }
+
+        @include small {
+            height: 50vh;
+            img {
+                width: 250px;
+            }
+        }
+    }
+
+    .navbar {
+        color: getColor(1);
+
+        .nav-space {
+            --color-rotation: 0deg;
+            display: inline-block;
+            padding: 10px;
+            background: linear-gradient(var(--color-rotation), getColor(6) 0%, getColor(7) 50%, getColor(8) 100%);
+            &:hover {
+                --color-rotation: 180deg;
+            }
+
+            border: 1px solid getColor(8);
+        }
+
+        & > .nav-space{
+            display:none;
+        }
+
+        @include small{
+            & > .nav-space{
+                display: inline-block;
+            }
+        }
+    }
+}

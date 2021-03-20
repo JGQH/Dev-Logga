@@ -19,8 +19,6 @@ This project is a practice to create a "serverless" app connecting React JS to F
 \* *No images yet* \*
 
 ## To-Do
-- A Homepage \(Stub version\)
-- Main styles for Homepage
 - Login system
 - Signup system
 - Landing page

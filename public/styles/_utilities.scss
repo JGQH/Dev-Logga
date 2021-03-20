@@ -1,0 +1,14 @@
+/* Palette "SLSO8", recovered from "https://lospec.com/palette-list/slso8" */
+@use "sass:list";
+
+$colors:#0d2b45 #203c56 #544e68 #8d697a #d08159 #ffaa5e #ffd4a3 #ffecd6;
+
+@function getColor($index) {
+    @return list.nth($colors, $index);
+}
+
+@mixin small {
+    @media only screen and (min-width: 600px){
+        @content;
+    }
+}
