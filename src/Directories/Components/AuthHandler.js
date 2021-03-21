@@ -17,6 +17,10 @@ export function AuthProvider({content}) {
         return Auth.signInWithEmailAndPassword(email, password);
     }
 
+    function signOut() {
+        return Auth.signOut();
+    }
+
     useEffect(() => {
         const disconnect = Auth.onAuthStateChanged(newUser => {
             setUser(newUser);
@@ -26,7 +30,7 @@ export function AuthProvider({content}) {
     }, [])
     
     const value = {
-        user, signUp, signIn
+        user, signUp, signIn, signOut
     }
 
     return (

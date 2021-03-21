@@ -1,14 +1,19 @@
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from './Directories/Home';
-import Signer from './Directories/Signer'
-import { AuthProvider } from './Directories/Components/AuthHandler';
+import Signer from './Directories/Signer';
+import LandPage from './Directories/LandPage'
+import { AuthProvider, useAuth } from './Directories/Components/AuthHandler';
 
 const RealApp = () => {
+  const { user } = useAuth();
   return (
   <Router>
     <Switch>
       <Route exact path="/">
-        <Home />
+        {user ?
+        <LandPage />
+        :
+        <Home />}
       </Route>
       <Route path="/signin">
         <Signer isSignUp={false} />
