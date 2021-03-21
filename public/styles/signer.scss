@@ -38,6 +38,16 @@
             margin-bottom: $separation;
         }
 
+        .error {
+            margin-top: $separation;
+            border-color: getColor(3);
+            border-radius: 10px;
+            background-color: getColor(4);
+            color: getColor(6);
+            padding: 10px;
+            text-align: center;
+        }
+
         button {
             width: calc(100% - 20px);
             padding: 10px;
@@ -48,6 +58,13 @@
             border: 2px solid getColor(1);
             border-radius: 10px;
             cursor: pointer;
+        }
+
+        button:disabled{
+            cursor: wait;
+            background-color: getColor(7);
+            border-color: getColor(6);
+            color: getColor(4);
         }
 
         .redirecter {

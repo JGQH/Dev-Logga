@@ -19,6 +19,5 @@ This project is a practice to create a "serverless" app connecting React JS to F
 \* *No images yet* \*
 
 ## To-Do
-- Create styles for error msg in Signer
-- Redirect to Home from SignIn and SignUp if user exists
+- Redirect to Home from Signer if user exists
 - Landing page instead of Home if user exists

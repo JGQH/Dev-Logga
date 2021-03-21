@@ -58,7 +58,7 @@ const Signer = ({isSignUp}) => {
                 <legend>Confirm Password</legend>
                 <input ref={confirmationRef} type="password" placeholder="$12345" required></input>
             </fieldset>}
-            {errorMsg && <>{errorMsg}</>}
+            {errorMsg && <div className="error">{errorMsg} </div>}
             <button type="submit" disabled={isLoading}>{isSignUp ? "Sign Up" : "Sign In"}</button>
             <div className="redirecter">
                 {isSignUp ?
