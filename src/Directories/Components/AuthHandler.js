@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect} from 'react';
-import { Auth } from './FireBase'
+import { Auth, FireStore } from './FireBase'
 
 const AuthContext = React.createContext();
 
@@ -21,15 +21,16 @@ export function AuthProvider({content}) {
         return Auth.signOut();
     }
 
-    function sendEmailVerification(newUser){
-        newUser.sendEmailVerification()
-                .then(ff => alert(`Email verification sent to '${newUser.email}'`))
-                .catch(uf => alert(`Failed to send email verification to '${newUser.email}'`));
+    function createUser(uid) {
+        return FireStore.collection(process.env.REACT_APP_USERS_COLLECTION).doc(uid).set({
+            "username": `Dev-${uid}`,
+            "description": `Hello world! I'm "Dev-${uid}", ready to start creating!`,
+            "networking": {}
+        });
     }
 
     useEffect(() => {
         const disconnect = Auth.onAuthStateChanged(newUser => {
-            newUser &&  (!newUser.emailVerified &&  sendEmailVerification(newUser));
             setUser(newUser);
             setLoading(false);
         });
@@ -37,7 +38,7 @@ export function AuthProvider({content}) {
     }, [])
     
     const value = {
-        user, signUp, signIn, signOut
+        user, signUp, signIn, signOut, createUser
     }
 
     return (

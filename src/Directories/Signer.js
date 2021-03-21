@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from './Components/AuthHandler'
 
 const Signer = ({isSignUp}) => {
-    const { signIn, signUp } = useAuth();
+    const { signIn, signUp, createUser } = useAuth();
     const [emailRef, passwordRef, confirmationRef] = [useRef(), useRef(), useRef()];
     const [isLoading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -14,8 +14,15 @@ const Signer = ({isSignUp}) => {
         try {
             setErrorMsg(null);
             setLoading(true);
-            await (isSignUp ? signUp : signIn)(email, password, error);
-            history.push("/")
+            if(isSignUp) {
+                const cred = await signUp(email, password);
+                await createUser(cred.user.uid);
+                await cred.user.sendEmailVerification();
+                alert("Check email for account verification!");
+                history.push("/")
+            } else {
+                await signIn(email, password);
+            }
         } catch {
             setLoading(false);
             setErrorMsg(error);
