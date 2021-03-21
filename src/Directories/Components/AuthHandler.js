@@ -21,8 +21,15 @@ export function AuthProvider({content}) {
         return Auth.signOut();
     }
 
+    function sendEmailVerification(newUser){
+        newUser.sendEmailVerification()
+                .then(ff => alert(`Email verification sent to '${newUser.email}'`))
+                .catch(uf => alert(`Failed to send email verification to '${newUser.email}'`));
+    }
+
     useEffect(() => {
         const disconnect = Auth.onAuthStateChanged(newUser => {
+            newUser &&  (!newUser.emailVerified &&  sendEmailVerification(newUser));
             setUser(newUser);
             setLoading(false);
         });

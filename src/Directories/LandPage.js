@@ -21,6 +21,11 @@ const LandPage = () => {
                 <p>Email: {user.email}</p>
                 <button onClick={handleSignOut}>Sign Out</button>
             </div>
+            {!user.emailVerified && (
+            <div className="verification">
+                <p>Your email has not been verified. Verification is required to continue in the website.</p>
+                <p>If your account has been verified, try refreshing the page.</p>
+            </div>)}
         </div>
     </>);
 }
