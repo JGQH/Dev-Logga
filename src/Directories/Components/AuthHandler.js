@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect} from 'react';
-import { Auth, FireStore } from './FireBase'
+import { Auth } from './FireBase'
 
 const AuthContext = React.createContext();
 
@@ -21,14 +21,6 @@ export function AuthProvider({content}) {
         return Auth.signOut();
     }
 
-    function createUser(uid) {
-        return FireStore.collection(process.env.REACT_APP_USERS_COLLECTION).doc(uid).set({
-            "username": `Dev-${uid}`,
-            "description": `Hello world! I'm "Dev-${uid}", ready to start creating!`,
-            "networking": {}
-        });
-    }
-
     useEffect(() => {
         const disconnect = Auth.onAuthStateChanged(newUser => {
             setUser(newUser);
@@ -38,7 +30,7 @@ export function AuthProvider({content}) {
     }, [])
     
     const value = {
-        user, signUp, signIn, signOut, createUser
+        user, signUp, signIn, signOut
     }
 
     return (

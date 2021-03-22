@@ -1,10 +1,11 @@
 import logo from '../Resources/dev-loggar-logo.png';
 import { useState, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useAuth } from './Components/AuthHandler'
+import { useAuth } from './Components/AuthHandler';
+import { createUserData } from './Components/FireHandler';
 
 const Signer = ({isSignUp}) => {
-    const { signIn, signUp, createUser } = useAuth();
+    const { signIn, signUp } = useAuth();
     const [emailRef, passwordRef, confirmationRef] = [useRef(), useRef(), useRef()];
     const [isLoading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -16,7 +17,7 @@ const Signer = ({isSignUp}) => {
             setLoading(true);
             if(isSignUp) {
                 const cred = await signUp(email, password);
-                await createUser(cred.user.uid);
+                await createUserData(cred.user.uid);
                 await cred.user.sendEmailVerification();
                 alert("Check email for account verification!");
                 history.push("/")
