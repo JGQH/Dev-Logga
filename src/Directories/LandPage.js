@@ -1,7 +1,5 @@
-import NavBar from './Components/Navbar';
-
 const LandPage = () => {
-    return <NavBar />
+    return <></>
 }
 
 export default LandPage;

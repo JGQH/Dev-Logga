@@ -5,7 +5,7 @@ import { getUserData } from './FireHandler';
 import miniLogo from '../../Resources/dev-loggar-mini-logo.png';
 
 const NavBar = () => {
-    const { user, signOut } = useAuth();
+    const { user } = useAuth();
     const [ userName, setUserName ] = useState("dev...");
 
     useEffect(() => {
@@ -20,14 +20,6 @@ const NavBar = () => {
         getName();
     }, [user])
     
-
-    async function handleSignOut() {
-        try {
-            await signOut();
-        } catch {
-            alert("Failed to Sign Out");
-        }
-    }
     return (
     <>
         <div className="dl-navbar">
@@ -36,12 +28,15 @@ const NavBar = () => {
                 <span>Dev-Loggar</span>
             </div>
             <div className="name-holder">
-                <h3>Welcome, {userName}</h3>
+                <h3>User: {userName}</h3>
             </div>
             <div className="options-holder">
-                <p>Email: {user.email}</p>
-                <Link to={`/profile/${user.uid}`}><button>Profile</button></Link>
-                <button onClick={handleSignOut}>Sign Out</button>
+                <div className="option">
+                    <Link to={`/profile/${user.uid}`}>Profile</Link>
+                </div>
+                <div className="option">
+                    <Link to="/signout">Sign Out</Link>
+                </div>
             </div>
         </div>
         {!user.emailVerified && (

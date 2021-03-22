@@ -3,6 +3,9 @@ import Home from './Directories/Home';
 import Signer from './Directories/Signer';
 import LandPage from './Directories/LandPage'
 import Profile from './Directories/Profile';
+import NotFound from './Directories/NotFound';
+import SignOut from './Directories/SignOut';
+import NavBar from './Directories/Components/Navbar';
 import { AuthProvider, useAuth } from './Directories/Components/AuthHandler';
 
 const RealApp = () => {
@@ -12,7 +15,10 @@ const RealApp = () => {
     <Switch>
       <Route exact path="/">
         {user ?
-        <LandPage />
+        <>
+          <NavBar />
+          <LandPage />
+        </>
         :
         <Home />}
       </Route>
@@ -22,8 +28,20 @@ const RealApp = () => {
       <Route path="/signup">
         <Signer isSignUp={true} />
       </Route>
-      <Route path="/profile">
-        <Profile />
+      
+      {user && (
+      <>
+        <Route path="/signout">
+          <SignOut />
+        </Route>
+        <Route path="/profile">
+          <NavBar />
+          <Profile />
+        </Route>
+      </>)}
+      
+      <Route path="/">
+        <NotFound />
       </Route>
     </Switch>
   </Router>);
