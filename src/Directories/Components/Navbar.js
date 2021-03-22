@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from './AuthHandler';
 import { getUserData } from './FireHandler';
 import miniLogo from '../../Resources/dev-loggar-mini-logo.png';
@@ -39,6 +40,7 @@ const NavBar = () => {
             </div>
             <div className="options-holder">
                 <p>Email: {user.email}</p>
+                <Link to={`/profile/${user.uid}`}><button>Profile</button></Link>
                 <button onClick={handleSignOut}>Sign Out</button>
             </div>
         </div>
