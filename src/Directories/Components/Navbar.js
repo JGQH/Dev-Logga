@@ -24,8 +24,7 @@ const NavBar = () => {
     <>
         <div className="dl-navbar">
             <div className="logo-holder">
-                <img src={miniLogo} alt="Dev-Loggar Mini Logo"/>
-                <span>Dev-Loggar</span>
+                <Link to="/" ><img src={miniLogo} alt="Dev-Loggar Mini Logo"/></Link>
             </div>
             <div className="name-holder">
                 <h3>User: {userName}</h3>

@@ -12,15 +12,30 @@ const RealApp = () => {
   const { user } = useAuth();
   return (
   <Router>
-    <Switch>
-      <Route exact path="/">
-        {user ?
-        <>
-          <NavBar />
+    {user ?
+    <>
+    {/* Require NavBar */}
+      <NavBar />
+      <Switch>
+        <Route exact path="/">
           <LandPage />
-        </>
-        :
-        <Home />}
+        </Route>
+        <Route path="/signout">
+          <SignOut />
+        </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
+        <Route path="/">
+          <NotFound />
+        </Route>
+      </Switch>
+    </>
+    :
+    <Switch>
+      {/* Do not require NavBar*/}
+      <Route exact path="/">
+        <Home />
       </Route>
       <Route path="/signin">
         <Signer isSignUp={false} />
@@ -28,22 +43,10 @@ const RealApp = () => {
       <Route path="/signup">
         <Signer isSignUp={true} />
       </Route>
-      
-      {user && (
-      <>
-        <Route path="/signout">
-          <SignOut />
-        </Route>
-        <Route path="/profile">
-          <NavBar />
-          <Profile />
-        </Route>
-      </>)}
-      
       <Route path="/">
         <NotFound />
       </Route>
-    </Switch>
+    </Switch>}
   </Router>);
 }
 

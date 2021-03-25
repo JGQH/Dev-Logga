@@ -20,10 +20,10 @@ const Signer = ({isSignUp}) => {
                 await createUserData(cred.user.uid);
                 await cred.user.sendEmailVerification();
                 alert("Check email for account verification!");
-                history.push("/")
             } else {
                 await signIn(email, password);
             }
+            history.push("/");
         } catch {
             setLoading(false);
             setErrorMsg(error);

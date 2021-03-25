@@ -1,5 +1,5 @@
 const LandPage = () => {
-    return <></>
+    return <>LandPage</>
 }
 
 export default LandPage;
