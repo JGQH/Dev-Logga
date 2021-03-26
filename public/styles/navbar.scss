@@ -1,0 +1,79 @@
+@use './utilities' as *;
+
+.dl-navbar {
+    width: 100vw;
+    padding: 10px;
+    background: linearGradient(0deg, 8 7 6);
+    
+    @include flex-box;
+
+    --distribution: 80%;
+
+    .title-holder {
+        flex: var(--distribution);
+        @include flex-box;
+        align-items: center;
+        justify-content: flex-start;
+
+        .logo {
+            padding: 10px;
+        }
+    }
+
+    @media only screen and (max-width: 599px){
+        position: relative;
+        .toggler-holder {
+            flex: calc(100% - var(--distribution));
+            @include flex-box;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .options-holder {
+            &.is-hidden {
+                display: none;
+            }
+            
+            &.non-hidden {
+                position: absolute;
+                left: 0;
+                top: 100%;
+            }
+
+            .option {
+                width: 100vw;
+                padding: 10px;
+                background: getColor(1);
+                text-align: center;
+                a { color: getColor(8); }
+            }
+        }
+    }
+    
+    @include small {
+        --distribution: 70%;
+        .toggler-holder {
+            display: none;
+        }
+
+        .options-holder {
+            flex: calc(100% - var(--distribution));
+            @include flex-box;
+            align-items: center;
+            justify-content: flex-end;
+
+            .option {
+                padding: 10px;
+            }
+        }
+    }
+}
+
+.dl-verification {
+    margin: 10px;
+    width: calc(100% - 20px);   
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid getColor(1);
+    background: getColor(4);
+}
