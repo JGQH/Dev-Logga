@@ -6,7 +6,7 @@ import miniLogo from '../../Resources/dev-loggar-mini-logo.png';
 
 const NavBar = () => {
     const { user } = useAuth();
-    const [ userName, setUserName ] = useState("dev...");
+    const [ userName, setUserName ] = useState("Remembering dev...");
     const [ hidden, setHidden] = useState(true);
 
     useEffect(() => {
@@ -15,7 +15,7 @@ const NavBar = () => {
                 const data = await getUserData(user.uid)
                 setUserName(data.username + "!");
             } catch {
-                setUserName("dev!");
+                setUserName("Dev!");
             }
         }
         getName();

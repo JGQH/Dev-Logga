@@ -5,6 +5,7 @@ import LandPage from './Directories/LandPage'
 import Profile from './Directories/Profile';
 import NotFound from './Directories/NotFound';
 import SignOut from './Directories/SignOut';
+import Posts from './Directories/Posts';
 import NavBar from './Directories/Components/Navbar';
 import { AuthProvider, useAuth } from './Directories/Components/AuthHandler';
 
@@ -25,6 +26,9 @@ const RealApp = () => {
         </Route>
         <Route path="/profile">
           <Profile />
+        </Route>
+        <Route path={["/posts", "/posts/:userId"]}>
+          <Posts />
         </Route>
         <Route path="/">
           <NotFound />

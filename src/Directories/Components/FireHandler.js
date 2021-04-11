@@ -13,3 +13,19 @@ export function createUserData(uid) {
         "following": []
     });
 }
+
+export async function getPosts(uid) {
+    if(uid) {
+        //Get posts from a specific profile
+        const posts = await FireStore.collection(process.env.REACT_APP_POSTS_COLLECTION).where("username", "==", uid).orderBy("date", 'desc').limit(20).get();
+        return posts.docs.map(doc => {
+            return doc.data()
+        })
+    }
+
+    //Get last posts
+    const posts = await FireStore.collection(process.env.REACT_APP_POSTS_COLLECTION).orderBy("date", 'desc').limit(20).get();
+    return posts.docs.map(doc => {
+        return doc.data();
+    })
+}
