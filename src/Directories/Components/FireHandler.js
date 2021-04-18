@@ -14,17 +14,24 @@ export function createUserData(uid) {
     });
 }
 
-export async function getPosts(uid) {
-    if(uid) {
-        //Get posts from a specific profile
-        const posts = await FireStore.collection(process.env.REACT_APP_POSTS_COLLECTION).where("username", "==", uid).orderBy("date", 'desc').limit(20).get();
-        return posts.docs.map(doc => {
-            return doc.data()
-        })
-    }
-
+export async function getPosts(lastPost) {
     //Get last posts
-    const posts = await FireStore.collection(process.env.REACT_APP_POSTS_COLLECTION).orderBy("date", 'desc').limit(20).get();
+    let query = FireStore.collection(process.env.REACT_APP_POSTS_COLLECTION).orderBy("date", 'desc');
+    if(lastPost) (query = query.startAt(lastPost));
+
+    const posts =  await query.limit(20).get();
+    return posts.docs.map(doc => {
+        return doc.data();
+    })
+}
+
+export async function getUserPosts(uid, lastPost) {
+    let query = FireStore.collection(process.env.REACT_APP_POSTS_COLLECTION).where("uid", "==", uid).orderBy("date", 'desc');
+
+    if(lastPost) (query = query.startAt(lastPost));
+
+    const posts = await query.limit(20).get();
+
     return posts.docs.map(doc => {
         return doc.data();
     })

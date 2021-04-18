@@ -1,32 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Switch, Route, useRouteMatch, useParams } from 'react-router-dom';
-import { getUserData } from './Components/FireHandler';
-
-async function getData(userId) {
-    try {
-        const data_ = await getUserData(userId);
-        return data_;
-    } catch {
-        return;
-    }
-}
+import { getUserData, getUserPosts } from './Components/FireHandler';
+import { useAsync } from './Libraries/Hooks';
 
 const RealProfile = () => {
     const { userId } = useParams();
-    const [ data, setData ] = useState({});
+    const [ data, dState, dReload ] = useAsync(() => getUserData(userId));
+    const [ posts, pState, pReload ] = useAsync(() => getUserPosts(userId));
 
     useEffect(() => {
-        async function getId() {
-            setData(await getData(userId));
-        }
-        getId();
+        dReload();
+        pReload();
     }, [userId]);
 
     return (
     <>
         <div className="profile-info">
-            {data ?
-            (data.username ?
+            {dState === "LOADING" && <p>Loading User Data...</p>}
+            {dState === "ERROR" && <p onClick={dReload}>Error while loading data, click here to try again</p>}
+            {dState === "FINISHED" &&
             <>
                 <h1>{data.username}</h1>
                 <div className="description">
@@ -43,11 +35,14 @@ const RealProfile = () => {
                 <div className="following">
                     Following: {data.following.length}
                 </div>
-            </>
-            :
-            <p>Loading...</p>)
-            :
-            <p onClick={async () => setData(await getData(userId))}>Error while loading info, click here to try again.</p>}
+            </>}
+        </div>
+        <div className="profile-posts">
+            {pState === "LOADING" && <p>Loading Posts...</p>}
+            {pState === "ERROR" && <p onClick={pReload}>Error while loading posts, click here to try again.</p>}
+            {pState === "FINISHED" && posts.map((post, i) => {
+                return <p key={i}>{post.content}</p>
+            })}
         </div>
     </>);
 }
